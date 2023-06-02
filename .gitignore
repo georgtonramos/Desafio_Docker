@@ -1,0 +1,39 @@
+# Arquivos Byte-compiled / otimizados / DLLs Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de log
+*.log
+
+# Bibliotecas
+venv/
+
+# Pasta de ambientes virtuais de Python
+.env
+
+# Arquivos de banco de dados SQLite (se aplicável)
+*.sqlite
+
+# Arquivos de backup do Django
+*.bak
+
+# Arquivos gerados durante a execução dos testes
+.tox
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Pasta de cache do Pytest
+.pytest_cache/
+
+# Arquivos temporários, que podem ser criados por editores de texto e IDEs
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
