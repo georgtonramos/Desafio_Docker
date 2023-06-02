@@ -28,8 +28,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 500M
+          cpus: '0.75'
+          memory: 1024M
 
   mongo-express:
     image: mongo-express:latest
@@ -50,5 +50,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 500M
+          cpus: '0.75'
+          memory: 1024M
