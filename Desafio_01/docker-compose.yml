@@ -9,7 +9,7 @@ networks:
 
 services:
   mongodb:
-    image: mongo:4.4.10
+    image: mongo:latest
     container_name: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
@@ -32,7 +32,7 @@ services:
           memory: 500M
 
   mongo-express:
-    image: mongo-express:1.0.0
+    image: mongo-express:latest
     container_name: mongo-express
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
