@@ -20,15 +20,10 @@ services:
       - 27017:27017
     networks:
       - mongodb_net
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo --quiet
-      interval: 30s
-      timeout: 5s
-      retries: 3
     deploy:
       resources:
         limits:
-          cpus: '0.75'
+          cpus: '0.50'
           memory: 1024M
 
   mongo-express:
@@ -42,13 +37,8 @@ services:
       - 8081:8081
     networks:
       - mongodb_net
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
     deploy:
       resources:
         limits:
-          cpus: '0.75'
+          cpus: '0.50'
           memory: 1024M
