@@ -14,7 +14,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: 'db_zabbix'
-      MYSQL_USER: ${MYSQL_ROOT_USER}
     ports:
       - '3306:3306'
     volumes:
