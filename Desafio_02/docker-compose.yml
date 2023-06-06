@@ -8,7 +8,7 @@ networks:
     driver: bridge
 
 services:
-  name: db_mysql
+  name: 'db_mysql'
   db:
     image: mysql:latest
     restart: always
@@ -32,7 +32,7 @@ services:
     ports:
       - '10051:10051'
     environment:
-      - DB_SERVER_HOST: db_mysql
+      - DB_SERVER_HOST: 'db_mysql'
       - MYSQL_USER: ${MYSQL_ROOT_USER}
       - MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE: 'db_zabbix'
@@ -48,7 +48,7 @@ services:
     ports:
       - '80:80'
     environment:
-      - DB_SERVER_HOST: db_mysql
+      - DB_SERVER_HOST: 'db_mysql'
       - MYSQL_USER: ${MYSQL_ROOT_USER}
       - MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE: 'db_zabbix'
