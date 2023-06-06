@@ -8,12 +8,13 @@ networks:
     driver: bridge
 
 services:
-  name: 'db_mysql'
-  db:
+  db_mysql:
     image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: 'db_zabbix'
+      MYSQL_USER: ${MYSQL_ROOT_USER}
     ports:
       - '3306:3306'
     volumes:
@@ -32,10 +33,12 @@ services:
     ports:
       - '10051:10051'
     environment:
-      - DB_SERVER_HOST: 'db_mysql'
-      - MYSQL_USER: ${MYSQL_ROOT_USER}
-      - MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE: 'db_zabbix'
+      DB_SERVER_HOST: db_mysql
+      MYSQL_USER: ${MYSQL_ROOT_USER}
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: 'db_zabbix'
+    networks:
+      - zabbix_net
     deploy:
       resources:
         limits:
@@ -48,15 +51,16 @@ services:
     ports:
       - '80:80'
     environment:
-      - DB_SERVER_HOST: 'db_mysql'
-      - MYSQL_USER: ${MYSQL_ROOT_USER}
-      - MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE: 'db_zabbix'
-      - ZBX_SERVER_HOST: zabbix_server
-      - PHP_TZ: America/Sao_Paulo
+      DB_SERVER_HOST: db_mysql
+      MYSQL_USER: ${MYSQL_ROOT_USER}
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: 'db_zabbix'
+      ZBX_SERVER_HOST: zabbix_server
+      PHP_TZ: America/Sao_Paulo
+    networks:
+      - zabbix_net
     deploy:
       resources:
         limits:
           cpus: '0.50'
           memory: 512M
-    
