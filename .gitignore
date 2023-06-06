@@ -37,3 +37,7 @@ coverage.xml
 # Arquivos de sistema operacional
 .DS_Store
 Thumbs.db
+
+
+## Outros
+docker-compose02.yml

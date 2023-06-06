@@ -1,0 +1,61 @@
+version: '3.8'
+
+volumes:
+  db_data:
+
+networks:
+  zabbix_net:
+    driver: bridge
+
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - '3306:3306'
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - zabbix_net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 1024M
+
+  zabbix_server:
+    image: zabbix/zabbix-server-mysql:ubuntu-6.0-latest 
+    restart: always
+    ports:
+      - '10051:10051'
+    environment:
+      - DB_SERVER_HOST: db
+      - MYSQL_USER: ${MYSQL_ROOT_USER}
+      - MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE: 'db_zabbix'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.70'
+          memory: 1024M
+
+  zabbix_frontend:
+    image: zabbix/zabbix-web-nginx-mysql:ubuntu-6.0-latest
+    restart: always
+    ports:
+      - '80:80'
+    environment:
+      - DB_SERVER_HOST: db
+      - MYSQL_USER: ${MYSQL_ROOT_USER}
+      - MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE: 'db_zabbix'
+      - ZBX_SERVER_HOST: zabbix_server
+      - PHP_TZ: America/Sao_Paulo
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    

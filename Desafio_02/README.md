@@ -1,0 +1,1 @@
+2 - Criar um Zabbix Server + FrontEnd + Banco de dados MySql
