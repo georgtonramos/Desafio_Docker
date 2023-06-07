@@ -35,6 +35,7 @@ services:
     ports:
       - '10051:10051'
     environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       DB_SERVER_HOST: db_mysql
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
