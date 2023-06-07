@@ -1,12 +1,5 @@
 version: '3.8'
 
-volumes:
-  db_data:
-
-networks:
-  zabbix_net:
-    driver: bridge
-
 services:
   db_mysql:
     image: mysql:8.0
@@ -68,3 +61,10 @@ services:
         limits:
           cpus: '0.50'
           memory: 512M
+
+volumes:
+  db_data:
+
+networks:
+  zabbix_net:
+    driver: bridge
