@@ -13,8 +13,6 @@ services:
       - '3306:3306'
     volumes:
       - db_data:/var/lib/mysql
-    networks:
-      - zabbix_net
     deploy:
       resources:
         limits:
@@ -33,8 +31,6 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    networks:
-      - zabbix_net
     deploy:
       resources:
         limits:
@@ -54,8 +50,6 @@ services:
       MYSQL_DATABASE: 'zabbix'
       ZBX_SERVER_HOST: 'zabbix_server:10051'
       PHP_TZ: America/Sao_Paulo
-    networks:
-      - zabbix_net
     deploy:
       resources:
         limits:
