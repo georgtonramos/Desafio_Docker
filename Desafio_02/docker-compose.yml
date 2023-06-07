@@ -1,8 +1,15 @@
 version: '3.8'
 
+networks:
+  network-zabbix:
+    driver: bridge
+
 services:
   db_mysql:
+    container_name: mysql
     image: mysql:8.0
+    networks:
+      - network-zabbix
     restart: always
     environment:
       MYSQL_USER: ${MYSQL_USER}
@@ -21,40 +28,51 @@ services:
     command: "--character-set-server=utf8 --collation-server=utf8_bin --default-authentication-plugin=mysql_native_password"
 
   zabbix_server:
+    container_name: zabbix-server
     image: zabbix/zabbix-server-mysql:ubuntu-6.0-latest
+    networks:
+      - network-zabbix
+    links:
+      - mysql
     restart: always
     ports:
       - '10051:10051'
     environment:
-      DB_SERVER_HOST: db_mysql
+      DB_SERVER_HOST: mysql
       MYSQL_DATABASE: 'zabbix'
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     deploy:
       resources:
         limits:
           cpus: '0.70'
           memory: 1024M
+    depends_on:
+      - mysql
 
   zabbix_frontend:
+    container_name: zabbix-frontend
     image: zabbix/zabbix-web-nginx-mysql:ubuntu-6.0-latest
+    networks:
+      - network-zabbix
+    links:
+      - mysql    
     restart: always
     ports:
       - '80:80'
     environment:
-      DB_SERVER_HOST: db_mysql
+      DB_SERVER_HOST: mysql
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: 'zabbix'
-      ZBX_SERVER_HOST: 'zabbix_server:10051'
       PHP_TZ: America/Sao_Paulo
     deploy:
       resources:
         limits:
           cpus: '0.50'
           memory: 512M
+    depends_on:
+      - mysql
 
 volumes:
   db_data:
