@@ -15,7 +15,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: zabbix
+      MYSQL_DATABASE: db_zabbix
     ports:
       - '3306:3306'
     volumes:
@@ -39,7 +39,7 @@ services:
       - '10051:10051'
     environment:
       DB_SERVER_HOST: mysql
-      MYSQL_DATABASE: zabbix
+      MYSQL_DATABASE: db_zabbix
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     deploy:
@@ -64,7 +64,7 @@ services:
       DB_SERVER_HOST: mysql
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: zabbix
+      MYSQL_DATABASE: db_zabbix
       PHP_TZ: America/Sao_Paulo
     deploy:
       resources:
