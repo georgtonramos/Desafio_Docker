@@ -12,6 +12,8 @@ services:
     image: mysql:latest
     restart: always
     environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: 'db_zabbix'
     ports:
@@ -25,6 +27,9 @@ services:
         limits:
           cpus: '0.75'
           memory: 1024M
+    command: 
+      --character-set-server=utf8 --collation-server=utf8_bin
+      --default-authentication-plugin=mysql_native_password
 
   zabbix_server:
     image: zabbix/zabbix-server-mysql:ubuntu-6.0-latest 
@@ -33,7 +38,9 @@ services:
       - '10051:10051'
     environment:
       DB_SERVER_HOST: db_mysql
-      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: 'db_zabbix'
     networks:
       - zabbix_net
@@ -50,7 +57,9 @@ services:
       - '80:80'
     environment:
       DB_SERVER_HOST: db_mysql
-      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: 'db_zabbix'
       ZBX_SERVER_HOST: zabbix_server
       PHP_TZ: America/Sao_Paulo
