@@ -25,7 +25,6 @@ services:
         limits:
           cpus: '0.75'
           memory: 1024M
-    command: "--character-set-server=utf8 --collation-server=utf8_bin --default-authentication-plugin=mysql_native_password"
 
   zabbix_server:
     container_name: zabbix-server
