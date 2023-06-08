@@ -25,6 +25,11 @@ services:
         limits:
           cpus: '0.75'
           memory: 1024M
+    healthcheck:
+      test: ["CMD", "mysqladmin","ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
 
   zabbix_server:
     container_name: zabbix-server
